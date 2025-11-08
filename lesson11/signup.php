@@ -1,51 +1,42 @@
-<?php include ('header.php'); ?>
+<?php include("header.php"); ?>
 
-<div class='signup'>
 
-<form class="form-signin" action='' method='post'>
-            
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="form3Example1" class="form-control" placeholder="Name" name="name" />
-                    <label class="form-label" for="form3Example1">Name</label>
-                  </div>
-                </div>
+<div class="signup">
+        
+    <form class="form-signin" action="register.php" method="post">
+        
+        <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
 
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="form3Example2" class="form-control" placeholder="Surname" name="surname"/>
-                    <label class="form-label" for="form3Example2">Surname</label>
-                  </div>
-                
 
-              <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="form3Example2" class="form-control" placeholder="surname" name="surname" />
-                    <label class="form-label" for="form3Example2">Username</label>
-                  </div>
-                </div>
-           
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control" placeholder="email" name="email"/>
-                <label class="form-label" for="form3Example3">Email address</label >
-              </div>
+        <label for="inputEmail" class="sr-only">Name</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Name" name="name" required autofocus>
 
-               <div data-mdb-input-init class="form-outline mb-4">
-                <input type="password" id="form3Example3" class="form-control" placeholder="password" name="password"/>
-                <label class="form-label" for="form3Example3">Password</label >
-              </div>
 
+        <label for="inputEmail" class="sr-only">Surname</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Surname" name="surname" required autofocus>
+
+
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Username" name="username" required autofocus>
         
 
-             
-              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" name="submit">
-                Sign up
-              </button>
+
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="email" required autofocus>\
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
 
 
-<small>Aleready have am account? <a href="login.php">Log in</small>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign up</button>
 
-            </form>
+
+        <small>Already have account? <a href="login.php">Log In</a></small>
+
+
+        <p class="mt-5 mb-3 text-muted">Digital School &copy; 2023</p>
+    </form>
 </div>
 
-<?php include ('footer.php'); ?>
+
+<?php include("footer.php"); ?>
