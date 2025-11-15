@@ -27,12 +27,13 @@ $products=$getProducts->fetchAll();
     foreach($products as $products){
     ?>
     <tr>
-        <td> <?= $productss['id']?></td>
+        <td> <?= $products['id']?></td>
         <td> <?= $products['title']?></td>
         <td> <?= $products['description']?></td>
         <td> <?= $products['quantity']?></td>
         <td> <?= $products['price']?></td>
-        <td><?= "<a href= 'delete.php?id=$products[id]'>Delete </a>  | <a href= 'edit.php?id=$products[id]'>Update </a>"?></td>
+        <td><?= "<a href= 'delete.php?id=$products[id]'>Delete </a>  | <a href= 'editproduct.php?id=$products[id]'>Update </a>"?></td>
+        <a href="add.php"><button>Add Product</button></a>
     </tr>
     <?php
     }
