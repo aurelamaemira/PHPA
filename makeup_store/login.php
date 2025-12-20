@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
-        header('Location: dashboard.php');
+        header('Location: dashboard.php'); 
         exit();
     } else {
         $message = "Invalid email or password!";
@@ -45,10 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 350px;
             text-align: center;
         }
-        h2 {
-            margin-bottom: 20px;
-            color: #ff3399;
-        }
+        h2 { margin-bottom: 20px; color: #ff3399; }
         input[type="email"], input[type="password"] {
             width: 100%;
             padding: 12px;
@@ -66,22 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: 600;
             width: 100%;
         }
-        .btn:hover {
-            background-color: #e60073;
-        }
-        .message {
-            color: red;
-            margin-bottom: 10px;
-        }
-        .register-link {
-            margin-top: 15px;
-            display: block;
-            color: #ff3399;
-            text-decoration: none;
-        }
-        .register-link:hover {
-            text-decoration: underline;
-        }
+        .btn:hover { background-color: #e60073; }
+        .message { color: red; margin-bottom: 10px; }
+        .register-link { margin-top: 15px; display: block; color: #ff3399; text-decoration: none; }
+        .register-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -99,4 +84,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
-<?php
