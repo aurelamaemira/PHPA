@@ -55,12 +55,8 @@ try {
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         h2, h3 { color: #ff3399; }
         .add-wishlist-form { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .add-wishlist-form input, .add-wishlist-form select, .add-wishlist-form textarea { 
-            width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; 
-            box-sizing: border-box; font-size: 14px;
-        }
-        .add-wishlist-form button { background-color: #ff3399; color: white; border: none; padding: 12px 20px; 
-            border-radius: 5px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; }
+        .add-wishlist-form input, .add-wishlist-form select, .add-wishlist-form textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-size: 14px; }
+        .add-wishlist-form button { background-color: #ff3399; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; }
         .add-wishlist-form button:hover { background-color: #e60073; }
         .message { color: green; margin-bottom: 15px; font-weight: 500; background: #e8f5e9; padding: 10px; border-radius: 5px; }
         .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
@@ -79,11 +75,10 @@ try {
         .empty-message { text-align: center; color: #999; padding: 40px 0; }
         .image-placeholder { width: 100%; height: 200px; background: linear-gradient(135deg, #f5f5f5, #e0e0e0); display: flex; align-items: center; justify-content: center; color: #999; font-size: 14px; }
     </style>
-    </style>
 </head>
 <body>
     <nav>
-        <h1>My Wishlist</h1>
+        <h1>💕 My Wishlist</h1>
         <div>
             <a href="dashboard.php">Dashboard</a>
             <a href="logout.php">Logout</a>
@@ -95,9 +90,9 @@ try {
         
         <h3>Add Item to Wishlist</h3>
         <div class="add-wishlist-form">
-            <?php if ($wishlist_message) echo "<div class='message'>" . htmlspecialchars($wishlist_message) . "</div>"; ?>
+            <?php if ($wishlist_message) echo "<div class='message " . (strpos($wishlist_message, '✗') !== false ? 'error' : '') . "'>" . htmlspecialchars($wishlist_message) . "</div>"; ?>
             <p style="font-size: 13px; color: #666; margin: 0 0 15px 0;">
-                <strong>Tip:</strong> For image URLs, try Pinterest, Amazon, or Sephora product links (not Google Images direct links as they expire quickly)
+                <strong>Tip:</strong> For image URLs, try Pinterest, Amazon, or Sephora product links
             </p>
             <form method="post" action="">
                 <input type="hidden" name="add_wishlist" value="1">
@@ -109,17 +104,17 @@ try {
                     <?php endforeach; ?>
                 </select>
                 <input type="number" name="estimated_price" placeholder="Estimated Price" step="0.01" required>
-                <input type="url" name="image_url" placeholder="Image URL (e.g., from Google Images)">
+                <input type="url" name="image_url" placeholder="Image URL (optional)">
                 <textarea name="notes" placeholder="Notes or description (optional)" rows="3"></textarea>
-                <button type="submit">Add to Wishlist</button>
+                <button type="submit">✨ Add to Wishlist</button>
             </form>
         </div>
 
         <h3>Wishlist Items</h3>
         <?php if (!empty($wishlist_items)): ?>
-            <div class="wishlist-grid">
+            <div class="wishlist-grid" id="wishlistGrid">
                 <?php foreach ($wishlist_items as $item): ?>
-                    <div class="wishlist-card">
+                    <div class="wishlist-card draggable scroll-reveal" draggable="true" data-id="<?= $item['id'] ?>">
                         <?php if ($item['image_url']): ?>
                             <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="image-placeholder" style="display:none;">Image unavailable</div>
@@ -143,9 +138,9 @@ try {
             </div>
         <?php else: ?>
             <div class="empty-message">
-                <p>Your wishlist is empty. Add items you want to buy!</p>
+                <p>Your wishlist is empty. Add items you want to buy! 🛍️</p>
             </div>
         <?php endif; ?>
     </div>
-</body>
-</html>
+
+
