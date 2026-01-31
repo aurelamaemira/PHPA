@@ -11,7 +11,7 @@ $user_id = $_SESSION['user_id'];
 $profile_message = '';
 $message_type = '';
 
-// Fetch current user data
+
 $stmt = $pdo->prepare("SELECT id, name, email FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,7 +21,7 @@ if (!$user) {
     exit();
 }
 
-// Handle profile update
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $profile_message = "Password must be at least 6 characters!";
         $message_type = 'error';
     } else {
-        // Check if email is already taken (excluding current user)
+        
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
         $stmt->execute([$email, $user_id]);
         if ($stmt->fetch()) {
@@ -47,23 +47,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 if (!empty($password)) {
-                    // Update with new password
+                   
                     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                     $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?");
                     $stmt->execute([$name, $email, $hashed_password, $user_id]);
                 } else {
-                    // Update without password
+                    
                     $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
                     $stmt->execute([$name, $email, $user_id]);
                 }
                 
-                // Update session
+                
                 $_SESSION['user_name'] = $name;
                 
                 $profile_message = "Profile updated successfully! ✨";
                 $message_type = 'success';
                 
-                // Refresh user data
+              
                 $stmt = $pdo->prepare("SELECT id, name, email FROM users WHERE id = ?");
                 $stmt->execute([$user_id]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get user stats for display
+
 $stmt = $pdo->prepare("SELECT COUNT(*) as total_expenses, SUM(price) as total_spent FROM purchases WHERE user_id = ?");
 $stmt->execute([$user_id]);
 $stats = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -323,7 +323,7 @@ $stats = $stmt->fetch(PDO::FETCH_ASSOC);
     </nav>
 
     <div class="container">
-        <!-- Profile Header -->
+       
         <div class="profile-header">
             <div class="profile-avatar">👩‍🦰</div>
             <h2><?= htmlspecialchars($user['name']) ?></h2>
@@ -341,7 +341,7 @@ $stats = $stmt->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <!-- Profile Form -->
+        
         <div class="form-container">
             <h3>✏️ Edit Profile</h3>
             

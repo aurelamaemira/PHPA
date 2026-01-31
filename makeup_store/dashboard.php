@@ -10,20 +10,19 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 
-// Category icons
 $category_icons = [
-    'Makeup' => '💄',
-    'Skincare' => '🧴',
-    'Hair Care' => '💇',
-    'Body Care' => '🧖',
-    'Nails' => '💅'
+    'Makeup' => '',
+    'Skincare' => '',
+    'Hair Care' => '',
+    'Body Care' => '',
+    'Nails' => ''
 ];
 
 $categories = ['Makeup', 'Skincare', 'Hair Care', 'Body Care', 'Nails'];
 $totals = [];
 $budgets = [];
 
-// Get totals and budgets for each category
+
 foreach ($categories as $category) {
     $stmt = $pdo->prepare("SELECT SUM(price) as total FROM purchases WHERE user_id = ? AND category = ?");
     try {
@@ -34,7 +33,7 @@ foreach ($categories as $category) {
         $totals[$category] = 0;
     }
     
-    // Get budget for this category
+
     $stmt = $pdo->prepare("SELECT budget_limit FROM budgets WHERE user_id = ? AND category = ?");
     $stmt->execute([$user_id, $category]);
     $budget_row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -55,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_expense'])) {
         try {
             $stmt->execute([$user_id, $item_name, $category, $price, $purchase_date]);
             $expense_message = "Expense added successfully!";
-            // Refresh totals
+            
             foreach ($categories as $category_name) {
                 $stmt = $pdo->prepare("SELECT SUM(price) as total FROM purchases WHERE user_id = ? AND category = ?");
                 $stmt->execute([$user_id, $category_name]);
@@ -80,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['set_budget'])) {
         try {
             $stmt->execute([$user_id, $category, $budget_limit, $budget_limit]);
             $budget_message = "Budget updated successfully!";
-            // Refresh budgets
+            
             $stmt = $pdo->prepare("SELECT budget_limit FROM budgets WHERE user_id = ? AND category = ?");
             $stmt->execute([$user_id, $category]);
             $budget_row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -291,7 +290,7 @@ try {
                 $card_class = '';
                 if ($budget && $percentage >= 90) $card_class = ' danger';
                 elseif ($budget && $percentage >= 75) $card_class = ' warning';
-                $icon = $category_icons[$category] ?? '💰';
+                $icon = $category_icons[$category] ?? '';
             ?>
                 <div class="card<?= $card_class ?>">
                     <div class="icon"><?= $icon ?></div>
@@ -318,7 +317,7 @@ try {
         </div>
 
         <?php
-        // Prepare data for pie chart
+ 
         $chart_labels = json_encode(array_keys($totals));
         $chart_data = json_encode(array_values($totals));
         $total_spent = array_sum($totals);
@@ -366,7 +365,7 @@ try {
         </script>
         <?php endif; ?>
 
-        <h3>⚙️ Set Budget Limits</h3>
+        <h3> Set Budget Limits</h3>
         <div class="add-user-form">
             <?php if ($budget_message) echo "<div class='message " . (strpos($budget_message, 'Error') ? 'error' : 'success') . "'>" . htmlspecialchars($budget_message) . "</div>"; ?>
             <form method="post" action="">
@@ -382,7 +381,7 @@ try {
             </form>
         </div>
 
-        <h3>💳 Add New Expense</h3>
+        <h3> Add New Expense</h3>
         <div class="add-user-form">
             <?php if ($expense_message) echo "<div class='message " . (strpos($expense_message, 'Error') ? 'error' : 'success') . "'>" . htmlspecialchars($expense_message) . "</div>"; ?>
             <form method="post" action="">
@@ -400,7 +399,7 @@ try {
             </form>
         </div>
 
-        <h3>📋 Your Expenses</h3>
+        <h3> Your Expenses</h3>
         <table>
             <thead>
                 <tr>
